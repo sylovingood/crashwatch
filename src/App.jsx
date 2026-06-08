@@ -28,9 +28,9 @@ const C = {
 // ── Symbols → Finnhub tickers ─────────────────────────────────────
 // S&P 500 → SPY ETF, Nasdaq → QQQ, Dow → DIA, VIX → direct index
 const SYMBOLS = [
-  { key: "sp500",  ticker: "SPY",  name: "S&P 500",   label: "SPX",  multiplier: 10 },
-  { key: "nasdaq", ticker: "QQQ",  name: "Nasdaq",    label: "COMP", multiplier: 40 },
-  { key: "dow",    ticker: "DIA",  name: "Dow Jones", label: "DJIA", multiplier: 100 },
+  { key: "sp500", ticker: "SPY", name: "SPY ETF" }
+  { key: "nasdaq", ticker: "QQQ", name: "QQQ ETF" }
+  { key: "dow", ticker: "DIA", name: "DIA ETF" }
   { key: "vix",    ticker: "VIX",  name: "VIX",       label: "VIX",  multiplier: 1 },
 ];
 
