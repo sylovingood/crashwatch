@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react";
 // CONFIGURATION — paste your Finnhub API key here after signing up
 // at https://finnhub.io (free, takes 30 seconds)
 // ─────────────────────────────────────────────────────────────────
-const FINNHUB_KEY = "YOUR_FINNHUB_KEY_HERE";
+const FINNHUB_KEY = import.meta.env.VITE_FINNHUB_KEY;
 
 // EmailJS config — sign up free at https://emailjs.com
 const EMAILJS_SERVICE_ID  = "YOUR_SERVICE_ID";
