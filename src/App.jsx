@@ -71,20 +71,14 @@ function getDecision(score, tiers, currentDrop) {
 
 // ── API helpers ───────────────────────────────────────────────────
 async function fetchQuote(ticker) {
-  const res = await fetch(`https://finnhub.io/api/v1/quote?symbol=${ticker}&token=${FINNHUB_KEY}`);
-  if (!res.ok) throw new Error(`${res.status}`);
-  return res.json();
-}
-
-async function fetchFearGreed() {
-  try {
-    const res = await fetch("https://fear-and-greed-index.p.rapidapi.com/v1/fgi", {
-      headers: { "X-RapidAPI-Key": "demo", "X-RapidAPI-Host": "fear-and-greed-index.p.rapidapi.com" }
-    });
-    if (!res.ok) return null;
-    const d = await res.json();
-    return d?.fgi?.now?.value ?? null;
-  } catch { return null; }
+  const [quoteRes, metricRes] = await Promise.all([
+    fetch(`https://finnhub.io/api/v1/quote?symbol=${ticker}&token=${FINNHUB_KEY}`),
+    fetch(`https://finnhub.io/api/v1/stock/metric?symbol=${ticker}&metric=all&token=${FINNHUB_KEY}`)
+  ]);
+  const quote  = await quoteRes.json();
+  const metric = await metricRes.json();
+  quote._52WeekHigh = metric?.metric?.["52WeekHigh"] ?? null;
+  return quote;
 }
 
 async function fetchNews() {
@@ -265,7 +259,7 @@ export default function App() {
   const alertedTiers = useRef(new Set());
 
   const fetchMarket = async () => {
-    const configured = FINNHUB_KEY !== "YOUR_FINNHUB_KEY_HERE";
+    const configured = FINNHUB_KEY !== "d8j3349r01ql9enoepm0d8j3349r01ql9enoepmg";
     setApiReady(configured);
 
     if (!configured) {
@@ -290,6 +284,7 @@ export default function App() {
           updated[s.key] = {
             value: d.c, name: s.name, label: s.label,
             changePct: d.dp,
+            const peak = d._52WeekHigh ?? getStoredPeak(s.key, d.c);
             fromPeak: s.key !== "vix" ? ((d.c - peak) / peak) * 100 : null,
           };
         }
