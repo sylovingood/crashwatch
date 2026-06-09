@@ -298,7 +298,7 @@ export default function App() {
   };
 
   const fetchMarketNews = async () => {
-    const configured = FINNHUB_KEY !== "YOUR_FINNHUB_KEY_HERE";
+    const configured = FINNHUB_KEY !== "d8j3349r01ql9enoepm0d8j3349r01ql9enoepmg";
     if (!configured) {
       setNews([
         { time:"2m",  source:"Reuters",    sentiment:"bearish", text:"Fed signals rates unchanged through Q3 amid inflation concerns", url:"#" },
