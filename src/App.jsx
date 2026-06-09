@@ -280,12 +280,11 @@ export default function App() {
         const r = results[i];
         if (r.status === "fulfilled") {
           const d = r.value;
-          const peak = getStoredPeak(s.key, d.c);
+          const peak = d._52WeekHigh ?? getStoredPeak(s.key, d.c);
           updated[s.key] = {
-            value: d.c, name: s.name, label: s.label,
-            changePct: d.dp,
-            const peak = d._52WeekHigh ?? getStoredPeak(s.key, d.c);
-            fromPeak: s.key !== "vix" ? ((d.c - peak) / peak) * 100 : null,
+           value: d.c, name: s.name, label: s.label,
+           changePct: d.dp,
+           fromPeak: s.key !== "vix" ? ((d.c - peak) / peak) * 100 : null,
           };
         }
       });
